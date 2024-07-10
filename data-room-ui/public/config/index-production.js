@@ -1,7 +1,7 @@
 window.ENV = 'production'
-var productionConfig = {
-  baseUrl: 'http://192.168.59.45:8082/dataRoomServer',
-  fileUrlPrefix: 'http://192.168.59.45:8082/dataRoomServer' + '/static'
+var developmentConfig = {
+  baseURL: 'http://gcpaas.gccloud.com/dataRoomServer',
+  fileUrlPrefix: 'http://gcpaas.gccloud.com/dataRoomServer' + '/static'
 }
 // 必须的
-window.CONFIG = configDeepMerge(window.CONFIG, productionConfig)
+window.SITE_CONFIG.dataRoom  = configDeepMerge(window.SITE_CONFIG.dataRoom , developmentConfig)

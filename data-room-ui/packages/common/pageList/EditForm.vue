@@ -166,6 +166,7 @@
 import Icon from '@gcpaas/data-room-ui/packages/assets/images/dataSourceIcon/export'
 import { addPage, checkPageName, getPageEditInfo, updatePage } from '@gcpaas/data-room-ui/packages/js/api/pageApi'
 import { getCatalogList } from '@gcpaas/data-room-ui/packages/js/api/sideMenuApi'
+
 export default {
   name: 'EditForm',
   components: {},
@@ -188,11 +189,11 @@ export default {
         {
           label: 'PC仪表盘',
           value: 'dashboard'
-        },
-        {
-          label: '移动仪表盘',
-          value: 'appDashboard'
         }
+        // {
+        //   label: '移动仪表盘',
+        //   value: 'appDashboard'
+        // }
       ],
       resolutionRatioOptions: [
         {
@@ -442,7 +443,7 @@ export default {
     // 跳转设计态
     toDesign () {
       this.$router.push({
-        path: this.dataForm.type === 'bigScreen' ? window.BS_CONFIG?.routers?.bigScreenDesignUrl || '/big-screen/design' : window.BS_CONFIG?.routers?.dashBoardDesignUrl || '/dash-bord/design',
+        path: this.dataForm.type === 'bigScreen' ? window.SITE_CONFIG.dataRoom?.routers?.bigScreenDesignUrl || '/big-screen/design' : window.SITE_CONFIG.dataRoom?.routers?.dashBoardDesignUrl || '/dash-bord/design',
         query: {
           code: this.dataForm.code
         }
@@ -469,10 +470,12 @@ export default {
 
 <style lang="scss" scoped>
 @import '@gcpaas/data-room-ui/packages/assets/style/index.scss';
-.dataroom-page-list-edit-from-wrap{
-  .type-box{
+
+.dataroom-page-list-edit-from-wrap {
+  .type-box {
     display: flex;
-    .type-item-box{
+
+    .type-item-box {
       width: 100px;
       height: 50px;
       background-color: #F7F7F7;
@@ -481,14 +484,17 @@ export default {
       align-items: center;
       justify-content: center;
       font-size: 12px;
-      &:hover{
+
+      &:hover {
         cursor: pointer;
       }
     }
-    .active-item{
+
+    .active-item {
       color: #007aff;
     }
   }
+
   /*滚动条样式*/
   ::v-deep ::-webkit-scrollbar {
     width: 6px;

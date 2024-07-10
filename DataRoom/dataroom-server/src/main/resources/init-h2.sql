@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS big_screen_file
     type           VARCHAR(255)          NOT NULL DEFAULT '' COMMENT '类型，图片：picture、视频：video、模型：model、引用：reference,其他：other',
     hide           TINYINT               NOT NULL DEFAULT '0' COMMENT '是否在资源库中隐藏，1是0否',
     cover_url      VARCHAR(255)          NOT NULL DEFAULT '' COMMENT '封面图片路径',
-    cover_id       BIGINT                NOT NULL DEFAULT '0' COMMENT '封面图片id',
+    cover_id       VARCHAR(255)          NOT NULL DEFAULT '0' COMMENT '封面图片id',
     PRIMARY KEY (id)
 );
 
@@ -80,6 +80,8 @@ CREATE TABLE IF NOT EXISTS big_screen_biz_component
     cover_picture    varchar(255) NOT NULL DEFAULT '' COMMENT '封面图片文件路径',
     vue_content      clob COMMENT 'vue组件内容',
     setting_content  clob COMMENT '组件配置内容',
+    interaction      text COMMENT '组件交互配置',
+    biz_type         int          NOT NULL DEFAULT 1 COMMENT '组件类型 1.组件 2.模板 3.区块',
     order_num        bigint       NOT NULL DEFAULT '0' COMMENT '排序',
     remark           varchar(100) NOT NULL DEFAULT '' COMMENT '备注',
     update_date      timestamp    NULL     DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',

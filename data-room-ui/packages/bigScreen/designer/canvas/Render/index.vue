@@ -37,19 +37,19 @@ export default {
       rawChart: []
     }
   },
-  inject: ['chartProvide'],
+  inject: ['canvasInst'],
   computed: {
     scale () {
-      return this.chartProvide.zoom() / 100
+      return this.canvasInst.zoom / 100
     },
     pageInfo () {
-      return this.chartProvide.pageInfo()
+      return this.canvasInst.pageInfo
     },
     pageConfig () {
-      return this.chartProvide.pageConfig()
+      return this.canvasInst.pageConfig
     },
     chartList () {
-      return this.chartProvide.chartList()
+      return this.canvasInst.chartList
     }
   },
   watch: {
@@ -70,7 +70,11 @@ export default {
       const transferData = e.dataTransfer.getData('dragComponent')
       if (transferData) {
         const element = JSON.parse(transferData)
-        this.chartProvide.addChart(element,'add')
+        if (element.disabled) {
+          this.$message.warning('组件正在开发中...')
+        } else {
+          this.canvasInst.addChart(element, 'add')
+        }
       }
     }
   }

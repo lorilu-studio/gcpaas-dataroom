@@ -3,7 +3,7 @@
     <div class="logo-wrap item-wrap">
       <img
         class="menu-img"
-        src="../../../assets/images/goBack.png"
+        src="../../../assets/images/logo.png"
         alt="返回"
         @click="goBackManage"
       >
@@ -13,16 +13,6 @@
       >{{ pageName }}</span>
     </div>
     <div class="head-btn-group">
-      <el-tooltip
-        class="item"
-        content="刷新画布"
-        placement="top"
-        popper-class="dataroom-el-tooltip"
-      >
-        <CusBtn>
-          <i class="el-icon-refresh-right" />
-        </CusBtn>
-      </el-tooltip>
       <el-tooltip
         class="item"
         effect="dark"
@@ -37,12 +27,21 @@
           <i class="el-icon-s-unfold" />
         </CusBtn>
       </el-tooltip>
+      <CusBtn @click="empty">
+        清空
+      </CusBtn>
       <CusBtn
         :loading="saveAndPreviewLoading"
         @click.native="execRun()"
       >
         <i class="el-icon-s-platform" />
         预览
+      </CusBtn>
+      <CusBtn
+        :loading="saveLoading"
+        @click="save"
+      >
+        保存
       </CusBtn>
       <CusBtn
         type="primary"
@@ -52,15 +51,6 @@
         <i class="el-icon-s-promotion" />
         发布
       </CusBtn>
-      <CusBtn
-        :loading="saveLoading"
-        @click="save"
-      >
-        保存
-      </CusBtn>
-      <CusBtn @click="empty">
-        清空
-      </CusBtn>
     </div>
     <PageNameEditDialog ref="pageNameEditDialog" />
   </div>
@@ -69,6 +59,7 @@
 import { saveScreen } from '@gcpaas/data-room-ui/packages/js/api/pageApi'
 import PageNameEditDialog from './EditForm.vue'
 import CusBtn from '@gcpaas/data-room-ui/packages/common/customBtn'
+
 export default {
   name: 'PageTopSetting',
   components: {
@@ -94,17 +85,17 @@ export default {
       saveAndPreviewLoading: false
     }
   },
-  inject: ['chartProvide'],
+  inject: ['canvasInst'],
   computed: {
     chartList () {
-      return this.chartProvide.chartList()
+      return this.canvasInst.chartList
     },
     pageCode () {
       return this.$route.query.code || this.code
     },
     pageInfo () {
-      // console.log('this.chartProvide.pageInfo()', this.chartProvide.pageInfo())
-      return this.chartProvide.pageInfo()
+      // console.log('this.canvasInst.pageInfo', this.canvasInst.pageInfo)
+      return this.canvasInst.pageInfo
     },
     pageName () {
       return this.pageInfo?.name || ''
@@ -143,7 +134,7 @@ export default {
         type: 'warning',
         customClass: 'bs-el-message-box'
       }).then(() => {
-        this.save(true)
+        this.save({ isBack: true, isPreview: false })
       }).catch((action) => {
         if (action === 'cancel') {
           this.$router.push({ path: '/' })
@@ -152,19 +143,19 @@ export default {
     },
     // 清空
     empty () {
-      this.chartProvide.updateActiveChart('')
+      this.canvasInst.updateActiveChart('')
       this.$emit('empty')
     },
     // 预览
     execRun () {
       // 保存
-      this.save().then((res) => {
+      this.save({ isBack: false, isPreview: true }).then((res) => {
         this.preview()
       })
     },
     // 预览
     preview (previewCode) {
-      const path = window?.BS_CONFIG?.routers?.bigScreenPreviewUrl || '/big-screen/preview'
+      const path = window?.SITE_CONFIG.dataRoom?.routers?.bigScreenPreviewUrl || '/big-screen/preview'
 
       const { href } = this.$router.resolve({
         path,
@@ -175,17 +166,16 @@ export default {
       window.open(href, '_blank')
     },
     // 保存
-    async save (isBack = false) {
-      console.log(isBack)
+    async save (params = { isBack: false, isPreview: false }) {
       return new Promise((resolve, reject) => {
-        saveScreen(this.pageInfo).then(res => {
+        saveScreen({ ...this.pageInfo, isPreview: params.isPreview }).then(res => {
           this.$message.success('保存成功')
           resolve(res)
         }).catch(err => {
           reject(err)
         }).finally(() => {
           this.saveLoading = false
-          if (isBack) {
+          if (params.isBack) {
             this.$router.push({ path: '/' })
           }
         })

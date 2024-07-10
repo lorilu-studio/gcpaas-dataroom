@@ -113,11 +113,11 @@
             :before-upload="beforeUpload"
             :on-success="uploadSuccess"
             :data="fileUploadParam"
-            :headers="headers"
+            :http-request="uploadRequest"
             :on-remove="removeImg"
             :auto-upload="true"
           >
-            <el-button>
+            <el-button :loading="uploadLoading">
               上传
             </el-button>
           </el-upload>
@@ -173,6 +173,7 @@
 <script>
 import { getFileUrl } from '@gcpaas/data-room-ui/packages/js/utils/file'
 import axios from 'axios'
+import { uploadRequest } from '@gcpaas/data-room-ui/packages/js/utils'
 
 export default {
   name: 'ImportResource',
@@ -194,10 +195,10 @@ export default {
       fileUploadParam: {
         hide: 1
       },
-      actionUrl: window.BS_CONFIG?.httpConfigs?.baseURL + '/dataroom/file/upload',
-      sourceExtends: window.BS_CONFIG?.sourceExtends || ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'webp', 'ico', 'xls', 'xlsx', 'csv'],
+      actionUrl: window.SITE_CONFIG.dataRoom?.baseURL + '/dataroom/file/upload',
+      sourceExtends: window.SITE_CONFIG.dataRoom?.sourceExtends || ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'webp', 'ico', 'xls', 'xlsx', 'csv'],
       headers: {
-        ...window.BS_CONFIG?.httpConfigs?.headers
+        ...window.SITE_CONFIG.dataRoom?.headers
       },
       formVisible: false,
       uploadLoading: false,
@@ -289,6 +290,21 @@ export default {
     beforeUpload () {
 
     },
+    // 自定义请求上传文件
+    uploadRequest (params) {
+      uploadRequest(params).then((res) => {
+        this.uploadLoading = false
+        this.$message({
+          type: 'success',
+          message: '上传成功'
+        })
+        this.dataForm.coverUrl = res.url
+        this.dataForm.coverId = res.id
+      }).catch((err) => {
+        this.uploadLoading = false
+        console.log(err)
+      })
+    },
     // 上传封面
     uploadSuccess (response, file) {
       if (response.code !== 200) {
@@ -314,15 +330,15 @@ export default {
           this.sureLoading = true
           let url = ''
           if (this.dataForm.id) {
-            url = window.CONFIG?.baseUrl + '/dataroom/file/update'
+            url = window?.SITE_CONFIG?.dataRoom?.baseURL + '/dataroom/file/update'
           } else {
-            url = window.CONFIG?.baseUrl + '/dataroom/file/add'
+            url = window?.SITE_CONFIG?.dataRoom?.baseURL + '/dataroom/file/add'
           }
           const formData = new FormData()
           Object.keys(this.dataForm).forEach(key => {
             formData.append(key, this.dataForm[key])
           })
-          axios.post(url, formData).then(res => {
+          this.$dataRoomAxios.upload(url, formData).then(res => {
             this.sureLoading = false
             this.$message.success('操作成功')
             this.formVisible = false

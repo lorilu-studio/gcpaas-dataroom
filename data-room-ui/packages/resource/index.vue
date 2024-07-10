@@ -39,10 +39,10 @@
           :before-upload="beforeUpload"
           :data="uploadParams"
           :file-list="fileList"
-          :headers="headers"
           :on-error="uploadError"
           :on-success="uploadSuccess"
           :show-file-list="false"
+          :http-request="uploadRequest"
           class="upload-demo"
           :accept="acceptOption[uploadParams.type]"
           multiple
@@ -118,11 +118,11 @@
                       :before-upload="beforeUpload"
                       :data="{ module: catalogCode, id: resource.id ,type: resource.type}"
                       :file-list="fileList"
-                      :headers="headers"
                       :on-error="uploadError"
                       :on-success="uploadSuccess"
                       :show-file-list="false"
                       class="upload-demo"
+                      :http-request="uploadRequest"
                       :accept="acceptOption[resource.type]"
                       multiple
                     >
@@ -248,6 +248,8 @@
 import { pageMixins } from '@gcpaas/data-room-ui/packages/js/mixins/page'
 import ImportResource from './ImportResource'
 import { getFileUrl } from '@gcpaas/data-room-ui/packages/js/utils/file'
+import { upload } from '@gcpaas/data-room-ui/packages/js/utils/http'
+import { uploadRequest } from '@gcpaas/data-room-ui/packages/js/utils'
 
 export default {
   name: 'ResourceList',
@@ -316,17 +318,14 @@ export default {
         url: ''
       },
       file: null,
-      upLoadUrl: window.BS_CONFIG?.httpConfigs?.baseURL + '/dataroom/file/add',
-      replaceUrl: window.BS_CONFIG?.httpConfigs?.baseURL + '/dataroom/file/replace',
+      upLoadUrl: window.SITE_CONFIG.dataRoom?.baseURL + '/dataroom/file/add',
+      replaceUrl: window.SITE_CONFIG.dataRoom?.baseURL + '/dataroom/file/replace',
       searchKey: '',
       extend: '',
       resourceType: '',
-      sourceExtends: window.BS_CONFIG?.sourceExtends || ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'webp', 'ico', 'xls', 'xlsx', 'csv'],
+      sourceExtends: window.SITE_CONFIG.dataRoom?.sourceExtends || ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'webp', 'ico', 'xls', 'xlsx', 'csv'],
       list: [],
       fileUploadParam: {},
-      headers: {
-        ...window.BS_CONFIG?.httpConfigs?.headers
-      },
       fileList: [],
       loading: false,
       imgExtends: ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'webp', 'ico', 'image'],
@@ -360,6 +359,20 @@ export default {
     this.getDataList()
   },
   methods: {
+    // 自定义请求上传文件
+    uploadRequest (params) {
+      uploadRequest(params).then((res) => {
+        this.uploadLoading = false
+        this.$message({
+          type: 'success',
+          message: '上传成功'
+        })
+        this.getDataList()
+      }).catch((err) => {
+        this.uploadLoading = false
+        console.log(err)
+      })
+    },
     // 选择上传的资源类型
     selectHandler (type) {
       // 每次上传资源前先重置参数
@@ -450,7 +463,6 @@ export default {
       this.uploadLoading = false
     },
     getDataList () {
-      console.log('getDataList', this.searchKey)
       this.loading = true
       this.$dataRoomAxios.get('/dataroom/file', {
         module: this.catalogInfo.page.code,

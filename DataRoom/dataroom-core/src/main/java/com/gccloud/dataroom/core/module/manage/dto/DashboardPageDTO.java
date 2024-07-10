@@ -47,6 +47,12 @@ public class DashboardPageDTO extends BasePageDTO {
     @ApiModelProperty(notes = "仪表盘整体样式")
     private String style;
 
+    @ApiModelProperty(notes = "交互")
+    private List<Map<String, Object>> interactions;
+
+    @ApiModelProperty(notes = "全局变量")
+    private List<Map<String, Object>> globalVariable;
+
     @ApiModelProperty(notes = "页面配置")
     private PageConfig pageConfig;
 

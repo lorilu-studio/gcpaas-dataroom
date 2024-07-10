@@ -8,43 +8,20 @@ import App from './App'
 import router from './router'
 import 'element-ui/lib/theme-chalk/index.css'
 // import '@gcpaas/data-room-ui/packages/assets/style/common.scss'
-import * as $dataRoomAxios from '@gcpaas/data-room-ui/packages/js/utils/http.js'
-import { registerConfig } from '@gcpaas/data-room-ui/packages/index.js'
+
+import { registerDataRoomUI } from '@gcpaas/data-room-ui/packages/index.js'
 // import customPlots from '@/customPlots/exports'
 Vue.use(ElementUI, { size: 'mini' })
-registerConfig(
+registerDataRoomUI(
   {
-    routers: {
-      // 大屏设计路由
-      bigScreenDesignUrl: '/big-screen/design',
-      // 大屏预览路由
-      bigScreenPreviewUrl: '/big-screen/preview',
-      // 大屏设计路由
-      dashBoardDesignUrl: '/dash-bord/design',
-      // 大屏预览路由
-      dashBoardPreviewUrl: '/dash-bord/preview',
-      // 数据源管理路由
-      datasourceManageUrl: '/big-screen/datasource',
-      // 数据集管理路由
-      datasetManageUrl: '/big-screen/dataSet'
-
-    },
-    // 控制自定义路由是否加入到大屏的路由中，方便做权限控制
-    notRegisterRouter: false,
-    httpConfigs: {
-      baseURL: window.CONFIG?.baseUrl,
-      headers: { 'Dataroom-Token': 'eyJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiIyIiwiYXVkIjoiMiIsInVuYW1lIjoiYWRtaW4iLCJybmFtZSI6IueuoeeQhuWRmCIsImlzcyI6ImdjIiwib2lkIjoiMSIsImlkIjoiYWRtaW46cGNfMTc0NTYzODc5Njg4OTc5MjUxMyIsImV4cCI6MTcwNTExNDA5NiwiaWF0IjoxNzA1MDI3Njk2LCJ0aWQiOiIyIiwianRpIjoiYWRtaW46cGNfMTc0NTYzODc5Njg4OTc5MjUxMyJ9.3aOT1x4M-ngHNfcSnyoMgP3MGTenDhQwyCO_3nUqoRU' },
-      // 现在文件路径保存的是相对路径，所以需要加上前缀,这个值一般和后端的gc.starter.file.urlPrefix一致
-      fileUrlPrefix: window.CONFIG.fileUrlPrefix ? window.CONFIG.fileUrlPrefix : window.CONFIG?.baseUrl + '/static'
-    }
-  },
-  router
+    router: router,
+    registerRouter: true
+  }
 )
 promise.polyfill()
 // 自定义指令
 Vue.use(ElementUI, { size: 'mini' })
 Vue.config.productionTip = false
-Vue.prototype.$dataRoomAxios = $dataRoomAxios
 // 兼容ie下双向绑定事件
 Vue.prototype.inputChange = function (e) {
   return e.target.value

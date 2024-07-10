@@ -111,8 +111,8 @@ export default {
       const config = cloneDeep(this.config)
       config.transform = newTransform
       // 更新图表的配置和样式处理器
-      this.chartProvide.updateChartConfig(config)
-      this.chartProvide.updateStyleHandler(config)
+      this.canvasInst.updateChartConfig(config)
+      this.canvasInst.updateStyleHandler(config)
     }
 
   }
@@ -128,5 +128,13 @@ export default {
   .col-box{
     margin-top: 12px;
   }
+}
+.test-input-box{
+  //在样式表中定义一个 ::placeholder 伪类选择器，指定需要修改的属性和值，例如修改占位符文本颜色为灰色（#888888）。
+  ::v-deep .el-input__inner::placeholder {
+    color: #000;
+    font-size:30px;
+  }
+
 }
 </style>

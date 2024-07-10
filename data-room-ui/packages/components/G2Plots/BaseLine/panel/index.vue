@@ -9,37 +9,9 @@
         name="style"
       >
         <span slot="label"><i class="label-icon el-icon-help" />样式</span>
-        <div
-          class="bs-setting-wrap"
-          @click.stop
-        >
-          <el-form
-            ref="form"
-            :model="config"
-            label-width="100px"
-            label-position="left"
-            class="setting-body bs-el-form"
-          >
-            <div class="data-setting-box">
-              <div
-                class="data-setting-data-box"
-              >
-                <div class="lc-field-body">
-                  <el-form-item label="折线颜色">
-                    <el-color-picker
-                      v-model="config.option.lineStyle.stroke"
-                      class="bs-el-color-picker"
-                      popper-class="bs-el-color-picker"
-                      show-alpha
-                      @change="changeStyle(config)"
-                    />
-                  </el-form-item>
-                </div>
-              </div>
-            </div>
-          </el-form>
-        </div>
+        <StylePanel :config="config" />
       </el-tab-pane>
+      <!--  数据配置 -->
       <el-tab-pane
         label="数据源"
         name="datasource"
@@ -47,10 +19,7 @@
         <span slot="label"><i class="label-icon el-icon-menu" />数据源</span>
         <DataPanel
           :config="config"
-          :dimension-field-name="dimensionFieldName"
-          :metric-field-name="metricFieldName"
-          :classified-field-name="classifiedFieldName"
-          :is-group="isGroup"
+          :field-name-mapping="fieldNameMapping"
         />
       </el-tab-pane>
       <el-tab-pane
@@ -58,6 +27,10 @@
         name="advanced"
       >
         <span slot="label"><i class="label-icon el-icon-s-finance" />高级</span>
+        <AdvancedPanel
+          :config="config"
+          :field-name-mapping="fieldNameMapping"
+        ></AdvancedPanel>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -66,12 +39,16 @@
 <script>
 
 import commonMixins from '@gcpaas/data-room-ui/packages/js/mixins/commonMixins'
+import StylePanel from './stylePanel/index.vue'
 import DataPanel from '@gcpaas/data-room-ui/packages/components/common/panel/dataPanel/index.vue'
+import AdvancedPanel from '@gcpaas/data-room-ui/packages/components/common/panel/advancedPanel/index.vue'
 export default {
   name: '',
   mixins: [commonMixins],
   components: {
-    DataPanel
+    StylePanel,
+    DataPanel,
+    AdvancedPanel
   },
   props: {
     config: {
@@ -81,10 +58,10 @@ export default {
   },
   data () {
     return {
-      dimensionFieldName: 'X轴字段',
-      metricFieldName: 'Y轴字段',
-      classifiedFieldName: '分组字段',
-      isGroup: false,
+      fieldNameMapping: {
+        dimensionField: 'X轴字段',
+        metricField: 'Y轴字段'
+      },
       fieldsList: [],
       activeName: 'style'
     }
@@ -100,5 +77,4 @@ export default {
 
 <style lang="scss" scoped>
 @import '@gcpaas/data-room-ui/packages/assets/style/settingWrap.scss';
-
 </style>

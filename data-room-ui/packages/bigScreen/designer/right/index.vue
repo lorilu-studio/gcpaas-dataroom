@@ -5,6 +5,7 @@
   >
     <div :class="!rightVisiable ? 'bs-page-right bs-page-right-fold' : 'bs-page-right'">
       <RightSetting
+        :config="config"
       />
     </div>
   </div>
@@ -28,10 +29,13 @@ export default {
       count: 0
     }
   },
-  inject: ['chartProvide'],
+  inject: ['canvasInst'],
   watch: {
   },
   computed: {
+    config () {
+      return this.canvasInst.activeChart
+    }
   },
   mounted () { },
   methods: {

@@ -44,6 +44,7 @@ export default {
   },
   data () {
     return {
+      chartInst: {},
       pageInfo: {},
       pageConfig: {},
       chartList: [],
@@ -55,20 +56,29 @@ export default {
     }
   },
   computed: {
+    isVisit () {
+      return this.$route.query.isVisit || false
+    },
+    canvasInst () {
+      return this
+    },
     pageCode () {
       return this.code || this.$route.query.code
+    },
+    filters: {
+      get () {
+        return this.pageInfo?.filters
+      },
+      set () {
+
+      }
+
     }
   },
   // 注入
   provide () {
     return {
-      chartProvide: Vue.observable({
-        chartList: this.chartList,
-        updateChartList: this.updateChartList,
-        updateChartConfig: this.updateChartConfig,
-        filters: () => this.pageInfo?.filters || {},
-        dataScripts: () => this.dataScripts
-      })
+      canvasInst: this.canvasInst
     }
   },
   mounted () {
@@ -77,7 +87,8 @@ export default {
   methods: {
     // 初始化页面信息
     PageInfoInit () {
-      getPageInfo(this.pageCode).then(res => {
+      const url = this.isVisit ? `/dataroom/design/info/code/${this.pageCode}` : `/dataroom/design/info/code/${this.pageCode}?preview=true`
+      this.$dataRoomAxios.get(url).then(res => {
         this.pageInfo = res
         this.pageConfig = this.pageInfo?.pageConfig || {}
         this.chartList = this.pageInfo?.chartList || []
@@ -98,6 +109,14 @@ export default {
           this.dataScripts[key] = new Function('params', this.pageInfo.filters[key].script)
         }
       }
+    },
+    // 将画布上的组件实例保存起来
+    updateChartInst (code, chartInstItem) {
+      this.chartInst[code] = chartInstItem
+    },
+    // 根据code获取实例
+    getChartInst (code) {
+      return this.chartInst[code]
     },
     // 更新chartList
     updateChartList (chartList) {

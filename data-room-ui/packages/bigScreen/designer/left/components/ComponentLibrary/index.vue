@@ -22,8 +22,8 @@
       >
         <el-tab-pane
           v-for="i in menu.children"
-          :key="i.name"
-          :name="i.name"
+          :key="i.code"
+          :name="i.code"
           class="bottom-tab-pane"
         >
           <div
@@ -41,10 +41,10 @@
             <!--                :class="i.icon"-->
             <!--              />-->
             <!--            </el-tooltip>-->
-            {{ i.title }}
+            {{ i.name }}
           </div>
           <div
-            v-if="i.name !=='g2Plot'"
+            v-if="i.code !=='g2Plot'"
             class="item-second-panel"
           >
             <div
@@ -62,6 +62,13 @@
             >
               <div class="bottom-pane-content-title">
                 {{ element.name }}
+                <el-tag
+                  v-if="element.disabled"
+                  style="float: right"
+                  type="warning"
+                >
+                  开发中
+                </el-tag>
               </div>
               <div class="bottom-pane-content-img">
                 <img
@@ -83,16 +90,16 @@
             >
               <el-tab-pane
                 v-for="j in i.children"
-                :key="j.name"
-                :name="j.name"
+                :key="j.code"
+                :name="j.code"
                 class="bottom-tab-pane"
               >
                 <div
                   slot="label"
                   class="menu-slot"
-                  :class="{'active-title': thirdActiveName === j.name}"
+                  :class="{'active-title': thirdActiveName === j.code}"
                 >
-                  {{ j.title }}
+                  {{ j.name }}
                 </div>
                 <div
                   v-for="chart in j.children"
@@ -109,6 +116,13 @@
                 >
                   <div class="bottom-pane-content-title">
                     {{ chart.name }}
+                    <el-tag
+                      v-if="chart.disabled"
+                      style="float: right"
+                      type="warning"
+                    >
+                      开发中
+                    </el-tag>
                   </div>
                   <div class="bottom-pane-content-img">
                     <img
@@ -151,7 +165,7 @@ export default {
   created () {
     this.nodeDrag()
   },
-  inject: ['chartProvide'],
+  inject: ['canvasInst'],
   mounted () {
   },
   methods: {
@@ -185,7 +199,11 @@ export default {
     },
     // 左侧组件列表点击添加组件
     elementClickHandler (element) {
-      this.chartProvide.addChart(element, 'add')
+      if (element.disabled) {
+        this.$message.warning('组件正在开发中...')
+      } else {
+        this.canvasInst.addChart(element, 'add')
+      }
     },
     // 点击关闭按钮关闭tab面板
     closePanel () {

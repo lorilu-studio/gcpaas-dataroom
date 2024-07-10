@@ -29,13 +29,13 @@ import cloneDeep from 'lodash/cloneDeep'
 export default {
   name: 'GradualSetting',
   model: {
-    prop: 'config',
+    prop: 'color',
     event: 'change'
   },
   props: {
-    config: {
-      type: Object,
-      default: () => {}
+    color: {
+      type: String,
+      default: ''
     }
   },
   data () {
@@ -56,7 +56,7 @@ export default {
   },
   computed: {
   },
-  inject: ['chartProvide'],
+  inject: ['canvasInst'],
   watch: {
   },
   mounted () {
@@ -66,21 +66,18 @@ export default {
     init () {
       // 匹配方向
       const regex = /l\(\d+\)/
-      this.position = this.config?.option?.columnStyle?.fill?.match(regex)[0]
+      this.position = this.color?.match(regex)[0]
       // 设置颜色的正则表达式 # 匹配RGBA颜色值的模式
       const pattern = /rgba\(\d+,\s*\d+,\s*\d+,\s*[\d.]+\)/g // 匹配RGBA颜色值的模式
       // 使用正则表达式查找匹配项
-      const matches = this.config?.option?.columnStyle?.fill?.match(pattern)
+      const matches = this.color?.match(pattern)
       // 提取匹配项中的颜色
       this.startColor = matches[0]
       this.endColor = matches[1]
     },
     colorChange (val) {
       this.colorsValue = `${this.position} 0:${this.startColor} 1:${this.endColor}`
-      const config = cloneDeep(this.config)
-      config.option.columnStyle.fill = this.colorsValue
-      this.chartProvide.updateChartConfig(config)
-      this.chartProvide.updateStyleHandler(config)
+      this.$emit('change', this.colorsValue)
     },
     positionChange () {
       // 将position的值循环移动一位

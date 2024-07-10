@@ -4,7 +4,7 @@
       <div class="logo-title">
         <img
           class="logo"
-          :src="logo"
+          src="./images/logo.png"
         >
         <span>{{ title }}</span>
       </div>
@@ -55,50 +55,29 @@ export default {
       if (this.$route.query.edit) return 'DataRoom设计器'
       return 'DataRoom设计器'
     },
-    logo () {
-      return window?.BS_CONFIG?.starter?.logo ?? require('./images/logo.png')
-    },
     tabList () {
       if (this.$route.query.edit) {
         return [
           {
             name: '素材库',
-            path: window?.BS_CONFIG?.routers?.pageListUrl || '/page-list',
+            path: window?.SITE_CONFIG.dataRoom?.routers?.pageListUrl || '/page-list',
             icon: 'icon-tupian',
             type: 'resource'
-          },
-          {
-            name: '组件库',
-            path: window?.BS_CONFIG?.routers?.componentUrl || '/big-screen-components',
-            icon: 'icon-zujian1',
-            type: 'component'
           }
         ]
       }
       return [
         {
           name: '页面设计',
-          path: window?.BS_CONFIG?.routers?.pageListUrl || '/page-list',
+          path: window?.SITE_CONFIG.dataRoom?.routers?.pageListUrl || '/page-list',
           icon: 'icon-icon-shujudaping',
           type: 'page'
         },
-        // {
-        //   name: '仪表盘管理',
-        //   path: window?.BS_CONFIG?.routers?.pageListUrl || '/page-list',
-        //   icon: 'icon-icon-shujudaping',
-        //   type: 'dashboard'
-        // },
         {
           name: '素材库',
-          path: window?.BS_CONFIG?.routers?.pageListUrl || '/page-list',
+          path: window?.SITE_CONFIG.dataRoom?.routers?.pageListUrl || '/page-list',
           icon: 'icon-tupian',
           type: 'resource'
-        },
-        {
-          name: '组件库',
-          path: window?.BS_CONFIG?.routers?.pageListUrl || '/page-list',
-          icon: 'icon-zujian1',
-          type: 'component'
         },
         {
           name: '数据源',
@@ -112,12 +91,6 @@ export default {
           icon: 'icon-data',
           type: 'dataset'
         }
-        // {
-        //   id: 6,
-        //   name: '地图数据管理',
-        //   path: window?.BS_CONFIG?.routers?.mapData || '/big-screen-map-data',
-        //   icon: 'icon-data'
-        // }
       ]
     }
   },
@@ -149,6 +122,7 @@ export default {
 .big-screen-home-wrap > * {
   box-sizing: border-box;
 }
+
 .big-screen-home-wrap {
   height: 100%;
 
@@ -220,12 +194,14 @@ export default {
     -webkit-background-clip: text;
   }
 }
-.fork-me-on-gitee{
+
+.fork-me-on-gitee {
   position: absolute;
   top: 0;
   right: 0;
   z-index: 999;
-  img{
+
+  img {
     width: 120px;
     height: 120px;
   }

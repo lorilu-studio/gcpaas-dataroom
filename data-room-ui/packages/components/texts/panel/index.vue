@@ -13,31 +13,7 @@
           class="bs-setting-wrap"
           @click.stop
         >
-          <el-form
-            ref="form"
-            :model="config"
-            label-width="100px"
-            label-position="left"
-            class="setting-body bs-el-form"
-          >
-            <div class="data-setting-box">
-              <div
-                class="data-setting-data-box"
-              >
-                <div class="lc-field-body">
-                  <el-form-item
-                    label="字体颜色"
-                    label-width="100px"
-                  >
-                    <el-color-picker
-                      v-model="config.color"
-                      @change="changeStyle"
-                    />
-                  </el-form-item>
-                </div>
-              </div>
-            </div>
-          </el-form>
+          <StylePanel :config="config" />
         </div>
       </el-tab-pane>
       <el-tab-pane
@@ -47,9 +23,7 @@
         <span slot="label"><i class="label-icon el-icon-menu" />数据源</span>
         <DataPanel
           :config="config"
-          :metric-field-name="metricFieldName"
-          :is-dimension="isDimension"
-          :is-group="isGroup"
+          :field-name-mapping="fieldNameMapping"
         />
       </el-tab-pane>
       <el-tab-pane
@@ -57,6 +31,10 @@
         name="advanced"
       >
         <span slot="label"><i class="label-icon el-icon-s-finance" />高级</span>
+        <AdvancedPanel
+          :config="config"
+          :field-name-mapping="fieldNameMapping">
+        </AdvancedPanel>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -66,12 +44,16 @@
 
 import commonMixins from '@gcpaas/data-room-ui/packages/js/mixins/commonMixins'
 import DataPanel from '@gcpaas/data-room-ui/packages/components/common/panel/dataPanel/index.vue'
+import AdvancedPanel from "@gcpaas/data-room-ui/packages/components/common/panel/advancedPanel/index.vue"
+import StylePanel from './StylePanel.vue'
 import cloneDeep from 'lodash/cloneDeep'
 export default {
   name: '',
   mixins: [commonMixins],
   components: {
-    DataPanel
+    DataPanel,
+    AdvancedPanel,
+    StylePanel
   },
   props: {
     config: {
@@ -81,9 +63,10 @@ export default {
   },
   data () {
     return {
-      metricFieldName: '文本内容',
-      isDimension: false,
-      isGroup: false,
+      fieldNameMapping: {
+        dimensionField: '文本内容',
+        metricField: '链接地址'
+      },
       fieldsList: [],
       activeName: 'style'
     }
@@ -100,4 +83,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '@gcpaas/data-room-ui/packages/assets/style/settingWrap.scss';
+.bs-setting-wrap{
+  height: 100%;
+}
 </style>

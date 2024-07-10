@@ -27,22 +27,22 @@ export default {
     ...panelList,
     ScreenSetPanel
   },
+  props: {
+    config: {
+      type: Object,
+      default: () => {}
+    }
+  },
   data () {
     return {
       activeName: 'data',
       isOperationRollback: false
     }
   },
-  inject: ['chartProvide'],
+  inject: ['canvasInst'],
   computed: {
-    config () {
-      return this.chartProvide.activeChart()
-    },
-    pageCode () {
-      return this.$route.query.code
-    },
     isScreenSet () {
-      return this.chartProvide.isScreenSet()
+      return this.canvasInst.isScreenSet
     }
   },
   mounted () {

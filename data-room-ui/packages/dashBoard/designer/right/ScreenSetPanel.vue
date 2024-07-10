@@ -48,7 +48,7 @@
                 :limit="1"
                 :on-success="uploadImg"
                 :data="fileUploadParam"
-                :headers="headers"
+                :http-request="uploadRequest"
                 :on-remove="removeImg"
                 :before-upload="beforeUpload"
                 :auto-upload="true"
@@ -80,7 +80,7 @@
 <script>
 import { getFileUrl } from '@gcpaas/data-room-ui/packages/js/utils/file'
 import { toPng } from 'html-to-image'
-import { compressImage, showSize } from '@gcpaas/data-room-ui/packages/js/utils'
+import { compressImage, showSize, uploadRequest } from '@gcpaas/data-room-ui/packages/js/utils'
 
 export default {
   name: '',
@@ -91,18 +91,18 @@ export default {
       fileUploadParam: {
         hide: 1
       },
-      actionUrl: window.BS_CONFIG?.httpConfigs?.baseURL + '/dataroom/file/upload',
-      sourceExtends: window.BS_CONFIG?.sourceExtends || ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'webp', 'ico', 'xls', 'xlsx', 'csv'],
+      actionUrl: window.SITE_CONFIG.dataRoom?.baseURL + '/dataroom/file/upload',
+      sourceExtends: window.SITE_CONFIG.dataRoom?.sourceExtends || ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'webp', 'ico', 'xls', 'xlsx', 'csv'],
       headers: {
-        ...window.BS_CONFIG?.httpConfigs?.headers
+        ...window.SITE_CONFIG.dataRoom?.headers
       },
       activeFitMode: 'fitWidth'
     }
   },
-  inject: ['chartProvide'],
+  inject: ['canvasInst'],
   computed: {
     pageInfo () {
-      return this.chartProvide.pageInfo()
+      return this.canvasInst.pageInfo
     }
   },
   watch: {},
@@ -142,7 +142,7 @@ export default {
             } else {
               _pageInfo.coverPicture = dataUrl
             }
-            this.chartProvide.updatePageInfo(_pageInfo)
+            this.canvasInst.updatePageInfo(_pageInfo)
           }
           this.saveAndPreviewLoading = false
         }).catch((error) => {
@@ -164,6 +164,22 @@ export default {
           }
         })
     },
+    // 自定义请求上传文件
+    uploadRequest (params) {
+      uploadRequest(params).then((res) => {
+        this.uploadLoading = false
+        this.$message({
+          type: 'success',
+          message: '上传成功'
+        })
+        const _pageInfo = JSON.parse(JSON.stringify(this.pageInfo))
+        _pageInfo.coverPicture = res.url
+        this.canvasInst.updatePageInfo(_pageInfo)
+      }).catch((err) => {
+        this.uploadLoading = false
+        console.log(err)
+      })
+    },
     // 上传封面
     uploadImg (response, file) {
       if (response.code !== 200) {
@@ -175,14 +191,14 @@ export default {
       } else {
         const _pageInfo = JSON.parse(JSON.stringify(this.pageInfo))
         _pageInfo.coverPicture = response.data.url
-        this.chartProvide.updatePageInfo(_pageInfo)
+        this.canvasInst.updatePageInfo(_pageInfo)
       }
     },
     // 删除封面
     removeImg () {
       const _pageInfo = JSON.parse(JSON.stringify(this.pageInfo))
       _pageInfo.coverPicture = ''
-      this.chartProvide.updatePageInfo(_pageInfo)
+      this.canvasInst.updatePageInfo(_pageInfo)
     },
     beforeUpload (file) {
       if (file.size > 30 * 1024 * 1024) {

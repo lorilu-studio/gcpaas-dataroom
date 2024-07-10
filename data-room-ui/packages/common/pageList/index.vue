@@ -74,7 +74,7 @@
                 <div class="preview">
                   <div
                     class="screen-card__oper-label circle"
-                    @click="preview(screen)"
+                    @click="visit(screen)"
                   >
                     <span>访问</span>
                   </div>
@@ -247,25 +247,26 @@ export default {
           this.loading = false
         })
     },
-    preview (screen) {
+    visit (screen) {
       let path = ''
       switch (screen.type) {
         case 'bigScreen':
-          path = window.BS_CONFIG?.routers?.bigScreenPreviewUrl || '/big-screen/preview'
+          path = window.SITE_CONFIG.dataRoom?.routers?.bigScreenPreviewUrl || '/big-screen/preview'
           break
         case 'dashboard':
-          path = window.BS_CONFIG?.routers?.dashBoardPreviewUrl || '/dash-bord/preview'
+          path = window.SITE_CONFIG.dataRoom?.routers?.dashBoardPreviewUrl || '/dash-bord/preview'
           break
         case 'appDashboard':
-          path = window.BS_CONFIG?.routers?.dashBoardPreviewUrl || '/dash-bord/preview'
+          path = window.SITE_CONFIG.dataRoom?.routers?.dashBoardPreviewUrl || '/dash-bord/preview'
           break
         default:
-          path = window.BS_CONFIG?.routers?.bigScreenPreviewUrl || '/big-screen/preview'
+          path = window.SITE_CONFIG.dataRoom?.routers?.bigScreenPreviewUrl || '/big-screen/preview'
       }
       const { href } = this.$router.resolve({
         path,
         query: {
-          code: screen.code
+          code: screen.code,
+          isVisit: true
         }
       })
       window.open(href, '_blank')
@@ -274,16 +275,16 @@ export default {
       let path = ''
       switch (screen.type) {
         case 'bigScreen':
-          path = window.BS_CONFIG?.routers?.bigScreenDesignUrl || '/big-screen/design'
+          path = window.SITE_CONFIG.dataRoom?.routers?.bigScreenDesignUrl || '/big-screen/design'
           break
         case 'dashboard':
-          path = window.BS_CONFIG?.routers?.dashBoardDesignUrl || '/dash-bord/design'
+          path = window.SITE_CONFIG.dataRoom?.routers?.dashBoardDesignUrl || '/dash-bord/design'
           break
         case 'appDashboard':
-          path = window.BS_CONFIG?.routers?.dashBoardDesignUrl || '/dash-bord/design'
+          path = window.SITE_CONFIG.dataRoom?.routers?.dashBoardDesignUrl || '/dash-bord/design'
           break
         default:
-          path = window.BS_CONFIG?.routers?.bigScreenDesignUrl || '/big-screen/design'
+          path = window.SITE_CONFIG.dataRoom?.routers?.bigScreenDesignUrl || '/big-screen/design'
       }
       this.$router.push({
         path,

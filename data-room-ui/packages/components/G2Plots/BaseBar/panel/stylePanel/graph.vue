@@ -94,7 +94,8 @@
       class="form-item-box"
     >
       <GradualSetting
-        v-model="config"
+        v-model="config.option.columnStyle.fill"
+        @change="changeStyle"
       />
     </el-form-item>
     <el-form-item
@@ -365,7 +366,7 @@ export default {
     TransformSet
   },
   mixins: [commonMixins],
-  inject: ['chartProvide'],
+  inject: ['canvasInst'],
   props: {
     config: {
       type: Object,
@@ -381,7 +382,7 @@ export default {
   },
   computed: {
     currentPageType () {
-      return this.chartProvide.currentPageType()
+      return this.canvasInst.currentPageType
     }
   },
   watch: {},

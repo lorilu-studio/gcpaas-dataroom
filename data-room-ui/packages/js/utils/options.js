@@ -18,6 +18,66 @@ export const fonFamilyList = [
   { label: '黑体', value: '黑体' },
   { label: '宋体', value: '宋体' }
 ]
+export const lineTypeOptions = [
+  { label: '折线', value: 'line' },
+  { label: '曲线', value: 'smooth' },
+  { label: '阶梯', value: 'ladder' }
+]
+export const lineStyleOptions = [
+  { label: '实线', value: 0 },
+  { label: '虚线', value: 5 }
+  // { label: '点线', value: 10 }
+]
+export const pointShapeOptions = [
+  {
+    label: '无',
+    value: false
+  },
+  {
+    label: '空心圆',
+    value: 'hollow-circle'
+  },
+  {
+    label: '圆形',
+    value: 'circle'
+  },
+  {
+    label: '正方形',
+    value: 'square'
+  },
+  {
+    label: '菱形',
+    value: 'diamond'
+  },
+  {
+    label: '三角形',
+    value: 'triangle'
+  },
+  {
+    label: '六边形',
+    value: 'hexagon'
+  },
+  {
+    label: '菱形交叉',
+    value: 'bowtie'
+  },
+  {
+    label: '十字形',
+    value: 'cross'
+  },
+  {
+    label: 'I形',
+    value: 'tick'
+  },
+  {
+    label: '加号',
+    value: 'plus'
+  },
+  {
+    label: '连字号',
+    value: 'hyphen'
+  }
+]
 export const markrList = [
   { value: 'circle', label: '圆' },
   { value: 'square', label: '矩形' },
@@ -42,6 +102,26 @@ export const positionOptions = [
   { value: 'middle', label: '中间' },
   { value: 'bottom', label: '底部' }
 ]
+export const fontStyleList = [
+  { value: 'normal', label: 'normal' },
+  { value: 'italic', label: 'italic' },
+  { value: 'oblique', label: 'oblique' }
+]
+export const textAlignList = [
+  { value: 'center', label: '居中对齐' },
+  { value: 'left', label: '左对齐' },
+  { value: 'right', label: '右对齐' }
+]
+export const borderStyleList = [
+  { label: '实线', value: 'solid' },
+  { label: '虚线', value: 'dashed' },
+  { label: '点线', value: 'dotted' },
+  { label: '双实线', value: 'double' },
+  { label: '雕刻效果', value: 'groove' },
+  { label: '浮雕效果', value: 'ridge' },
+  { label: '陷入效果', value: 'inset' },
+  { label: '突出效果', value: 'outset' }
+]
 export const axisXTitlePositionOptions = [
   { value: 'start', label: '靠左' },
   { value: 'center', label: '居中' },
@@ -65,4 +145,9 @@ export const legendPositionList = [
   { label: '右侧顶部', value: 'right-top' },
   { label: '右侧居中', value: 'right' },
   { label: '右侧底部', value: 'right-bottom' }
+]
+export const imgSizeList = [
+  { label: 'contain', value: 'contain' },
+  { label: 'cover', value: 'cover' },
+  { label: 'auto', value: 'auto' }
 ]
