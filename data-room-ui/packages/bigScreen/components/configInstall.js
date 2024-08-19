@@ -40,6 +40,38 @@ function getDeclarationByType (type) {
       return import(/* webpackChunkName: "BaseBarConfig" */ '@gcpaas/data-room-ui/packages/components/rests/WordCloud/bigScreenDefinition.js')
     case 'Heatmap':
       return import(/* webpackChunkName: "BaseBarConfig" */ '@gcpaas/data-room-ui/packages/components/G2Plots/rests/Heatmap/bigScreenDefinition.js')
+    case 'StackBar':
+      return import(/* webpackChunkName: "BaseBarConfig" */ '@gcpaas/data-room-ui/packages/components/G2Plots/StackBar/bigScreenDefinition.js')
+    case 'RoundBar':
+      return import(/* webpackChunkName: "BaseBarConfig" */ '@gcpaas/data-room-ui/packages/components/G2Plots/RoundBar/bigScreenDefinition.js')
+    case 'StackColumn':
+      return import(/* webpackChunkName: "BaseBarConfig" */ '@gcpaas/data-room-ui/packages/components/G2Plots/StackColumn/bigScreenDefinition.js')
+    case 'GroupColumn':
+      return import(/* webpackChunkName: "BaseBarConfig" */ '@gcpaas/data-room-ui/packages/components/G2Plots/GroupColumn/bigScreenDefinition')
+    case 'MultiLine':
+      return import(/* webpackChunkName: "BaseLineConfig" */ '@gcpaas/data-room-ui/packages/components/G2Plots/MultiLine/bigScreenDefinition')
+    case 'RaceLine':
+      return import(/* webpackChunkName: "BaseLineConfig" */ '@gcpaas/data-room-ui/packages/components/G2Plots/RaceLine/bigScreenDefinition')
+    case 'QuarterPie':
+      return import(/* webpackChunkName: "BaseLineConfig" */ '@gcpaas/data-room-ui/packages/components/G2Plots/QuarterPie/bigScreenDefinition')
+    case 'InteractivePie':
+      return import(/* webpackChunkName: "BaseLineConfig" */ '@gcpaas/data-room-ui/packages/components/G2Plots/InteractivePie/bigScreenDefinition')
+    case 'BaseDonut':
+      return import(/* webpackChunkName: "BaseLineConfig" */ '@gcpaas/data-room-ui/packages/components/G2Plots/BaseDonut/bigScreenDefinition')
+    case 'CardDonut':
+      return import(/* webpackChunkName: "BaseLineConfig" */ '@gcpaas/data-room-ui/packages/components/G2Plots/CardDonut/bigScreenDefinition')
+    case 'BaseRose':
+      return import(/* webpackChunkName: "BaseLineConfig" */ '@gcpaas/data-room-ui/packages/components/G2Plots/BaseRose/bigScreenDefinition')
+    case 'StackArea':
+      return import(/* webpackChunkName: "BaseLineConfig" */ '@gcpaas/data-room-ui/packages/components/G2Plots/StackArea/bigScreenDefinition')
+    case 'PercentArea':
+      return import(/* webpackChunkName: "BaseLineConfig" */ '@gcpaas/data-room-ui/packages/components/G2Plots/PercentArea/bigScreenDefinition')
+    case 'BaseYuJue':
+      return import(/* webpackChunkName: "BaseLineConfig" */ '@gcpaas/data-room-ui/packages/components/G2Plots/BaseYuJue/bigScreenDefinition')
+    case 'StackYuJue':
+      return import(/* webpackChunkName: "BaseLineConfig" */ '@gcpaas/data-room-ui/packages/components/G2Plots/StackYuJue/bigScreenDefinition')
+    case 'GroupRadar':
+      return import(/* webpackChunkName: "BaseLineConfig" */ '@gcpaas/data-room-ui/packages/components/G2Plots/GroupRadar/bigScreenDefinition')
   }
 }
 

@@ -18,6 +18,23 @@ import ButtonsDesc from '@gcpaas/data-room-ui/packages/components/controls/butto
 import InputsDesc from '@gcpaas/data-room-ui/packages/components/controls/inputs/declaration.js'
 import WordCloudDesc from '@gcpaas/data-room-ui/packages/components/rests/WordCloud/declaration.js'
 import HeatmapDesc from '@gcpaas/data-room-ui/packages/components/G2Plots/rests/Heatmap/declaration.js'
+import StackBarDesc from '@gcpaas/data-room-ui/packages/components/G2Plots/StackBar/declaration.js'
+import RoundBarDesc from '@gcpaas/data-room-ui/packages/components/G2Plots/RoundBar/declaration.js'
+import StackColumnDesc from '@gcpaas/data-room-ui/packages/components/G2Plots/StackColumn/declaration.js'
+import GroupColumnDesc from '@gcpaas/data-room-ui/packages/components/G2Plots/GroupColumn/declaration.js'
+import MultiLineDesc from '@gcpaas/data-room-ui/packages/components/G2Plots/MultiLine/declaration.js'
+import RaceLineDesc from '@gcpaas/data-room-ui/packages/components/G2Plots/RaceLine/declaration.js'
+import QuarterPieDesc from '@gcpaas/data-room-ui/packages/components/G2Plots/QuarterPie/declaration.js'
+import InteractivePieDesc from '@gcpaas/data-room-ui/packages/components/G2Plots/InteractivePie/declaration.js'
+import BaseDonutDesc from '@gcpaas/data-room-ui/packages/components/G2Plots/BaseDonut/declaration.js'
+import CardDonutDesc from '@gcpaas/data-room-ui/packages/components/G2Plots/CardDonut/declaration.js'
+import BaseRoseDesc from '@gcpaas/data-room-ui/packages/components/G2Plots/BaseRose/declaration.js'
+import StackAreaDesc from '@gcpaas/data-room-ui/packages/components/G2Plots/StackArea/declaration.js'
+import PercentAreaDesc from '@gcpaas/data-room-ui/packages/components/G2Plots/PercentArea/declaration.js'
+import BaseYuJueDesc from '@gcpaas/data-room-ui/packages/components/G2Plots/BaseYuJue/declaration.js'
+import StackYuJueDesc from '@gcpaas/data-room-ui/packages/components/G2Plots/StackYuJue/declaration.js'
+import GroupRadarDesc from '@gcpaas/data-room-ui/packages/components/G2Plots/GroupRadar/declaration.js'
+
 export default [
   {
     code: 'g2Plot',
@@ -32,6 +49,10 @@ export default [
           ...BaseBarDesc
         }, {
           ...GroupBarDesc
+        }, {
+          ...StackBarDesc
+        }, {
+          ...RoundBarDesc
         }]
       },
       {
@@ -40,7 +61,7 @@ export default [
         icon: 'el-icon-s-data',
         children: [{
           ...BaseColumnDesc
-        }, { ...SingleColorColumnDesc }]
+        }, { ...SingleColorColumnDesc }, { ...StackColumnDesc }, { ...GroupColumnDesc }]
       },
       {
         code: 'zhexiantu',
@@ -48,6 +69,10 @@ export default [
         icon: 'el-icon-s-data',
         children: [{
           ...BaseLineDesc
+        }, {
+          ...MultiLineDesc
+        }, {
+          ...RaceLineDesc
         }]
       },
       {
@@ -56,6 +81,10 @@ export default [
         icon: 'el-icon-s-data',
         children: [{
           ...BaseAreaDesc
+        }, {
+          ...StackAreaDesc
+        }, {
+          ...PercentAreaDesc
         }]
       },
       {
@@ -64,6 +93,14 @@ export default [
         icon: 'el-icon-s-data',
         children: [{
           ...BasePieDesc
+        }, {
+          ...QuarterPieDesc
+        }, {
+          ...InteractivePieDesc
+        }, {
+          ...BaseDonutDesc
+        }, {
+          ...CardDonutDesc
         }]
       },
       {
@@ -80,6 +117,8 @@ export default [
         icon: 'el-icon-s-data',
         children: [{
           ...BaseRadarDesc
+        }, {
+          ...GroupRadarDesc
         }]
       },
       {
@@ -96,6 +135,12 @@ export default [
         icon: 'el-icon-s-data',
         children: [{
           ...HeatmapDesc
+        }, {
+          ...BaseRoseDesc
+        }, {
+          ...BaseYuJueDesc
+        }, {
+          ...StackYuJueDesc
         }]
       }
     ]
@@ -122,7 +167,7 @@ export default [
     code: 'kongjian',
     name: '控件',
     icon: 'el-icon-s-data',
-    children: [{ ...ButtonsDesc },{...InputsDesc}]
+    children: [{ ...ButtonsDesc }, { ...InputsDesc }]
   },
   {
     code: 'container',

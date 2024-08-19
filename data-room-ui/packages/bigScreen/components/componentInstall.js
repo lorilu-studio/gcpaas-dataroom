@@ -16,6 +16,22 @@ const Buttons = () => import(/* webpackChunkName: "Texts" */ '@gcpaas/data-room-
 const Inputs = () => import(/* webpackChunkName: "Texts" */ '@gcpaas/data-room-ui/packages/components/controls/inputs/index.vue')
 const WordCloud = () => import(/* webpackChunkName: "Texts" */ '@gcpaas/data-room-ui/packages/components/rests/WordCloud/index.vue')
 const Heatmap = () => import(/* webpackChunkName: "Texts" */ '@gcpaas/data-room-ui/packages/components/G2Plots/rests/Heatmap/index.vue')
+const StackBar = () => import(/* webpackChunkName: "StackBar" */ '@gcpaas/data-room-ui/packages/components/G2Plots/StackBar/index.vue')
+const RoundBar = () => import(/* webpackChunkName: "StackBar" */ '@gcpaas/data-room-ui/packages/components/G2Plots/RoundBar/index.vue')
+const StackColumn = () => import(/* webpackChunkName: "BaseColumn" */ '@gcpaas/data-room-ui/packages/components/G2Plots/StackColumn/index.vue')
+const GroupColumn = () => import(/* webpackChunkName: "BaseColumn" */ '@gcpaas/data-room-ui/packages/components/G2Plots/GroupColumn/index.vue')
+const MultiLine = () => import(/* webpackChunkName: "BaseLine" */ '@gcpaas/data-room-ui/packages/components/G2Plots/MultiLine/index.vue')
+const RaceLine = () => import(/* webpackChunkName: "BaseLine" */ '@gcpaas/data-room-ui/packages/components/G2Plots/RaceLine/index.vue')
+const QuarterPie = () => import(/* webpackChunkName: "BasePie" */ '@gcpaas/data-room-ui/packages/components/G2Plots/QuarterPie/index.vue')
+const InteractivePie = () => import(/* webpackChunkName: "BasePie" */ '@gcpaas/data-room-ui/packages/components/G2Plots/InteractivePie/index.vue')
+const BaseDonut = () => import(/* webpackChunkName: "BasePie" */ '@gcpaas/data-room-ui/packages/components/G2Plots/BaseDonut/index.vue')
+const CardDonut = () => import(/* webpackChunkName: "BasePie" */ '@gcpaas/data-room-ui/packages/components/G2Plots/CardDonut/index.vue')
+const BaseRose = () => import(/* webpackChunkName: "BasePie" */ '@gcpaas/data-room-ui/packages/components/G2Plots/BaseRose/index.vue')
+const StackArea = () => import(/* webpackChunkName: "BasePie" */ '@gcpaas/data-room-ui/packages/components/G2Plots/StackArea/index.vue')
+const PercentArea = () => import(/* webpackChunkName: "BasePie" */ '@gcpaas/data-room-ui/packages/components/G2Plots/PercentArea/index.vue')
+const BaseYuJue = () => import(/* webpackChunkName: "BasePie" */ '@gcpaas/data-room-ui/packages/components/G2Plots/BaseYuJue/index.vue')
+const StackYuJue = () => import(/* webpackChunkName: "BasePie" */ '@gcpaas/data-room-ui/packages/components/G2Plots/StackYuJue/index.vue')
+const GroupRadar = () => import(/* webpackChunkName: "BasePie" */ '@gcpaas/data-room-ui/packages/components/G2Plots/GroupRadar/index.vue')
 
 // 将组件添加到对象中
 export default {
@@ -36,5 +52,21 @@ export default {
   Buttons,
   Inputs,
   WordCloud,
-  Heatmap
+  Heatmap,
+  StackBar,
+  RoundBar,
+  StackColumn,
+  GroupColumn,
+  MultiLine,
+  RaceLine,
+  QuarterPie,
+  InteractivePie,
+  BaseDonut,
+  CardDonut,
+  BaseRose,
+  StackArea,
+  PercentArea,
+  BaseYuJue,
+  StackYuJue,
+  GroupRadar
 }
